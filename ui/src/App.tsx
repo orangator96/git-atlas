@@ -233,7 +233,6 @@ export default function App() {
     return () => {
       if (branchDebounce.current) clearTimeout(branchDebounce.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [branchVis, repoOpen]);
 
   // Load recent repos and auto-open last repo on startup

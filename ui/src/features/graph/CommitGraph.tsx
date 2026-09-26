@@ -819,7 +819,6 @@ export default function CommitGraph({
 
   const lanes = useMemo(
     () => assignLanes(renderOrder, effEdges, trunkTipRender, firstParentOf),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [renderOrder, effEdges, trunkTipRender, firstParentOf]
   );
 
@@ -1010,8 +1009,7 @@ export default function CommitGraph({
           selected: id === selectedOid,
         } as Node;
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [renderOrder, lanes, indexByOid, yForRow, refsByOid, selectedOid, onSelectCommit, runNodes, nodeByOid, effEdges, regionEligible, onCollapseNode, expandRegion, resolved.affordancesByMerge, onTogglePath, stashesByBase, selectedStashIndex, syncSidesByMerge, highlightedOids]
+    [renderOrder, lanes, indexByOid, yForRow, refsByOid, selectedOid, onSelectCommit, runNodes, nodeByOid, regionEligible, onCollapseNode, expandRegion, resolved.affordancesByMerge, onTogglePath, stashesByBase, selectedStashIndex, syncSidesByMerge, highlightedOids]
   );
 
   // Working-tree pseudo-node placement (shared by the node and its edge). It
@@ -1112,8 +1110,7 @@ export default function CommitGraph({
     });
 
     return out;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, workingPlacement, stashPlacements, visibleStashIndices, indexByOid, lanes, selectedOid, onSelectCommit]);
+  }, [status, workingPlacement, stashPlacements, visibleStashIndices, selectedOid, onSelectCommit]);
 
   const flowEdges: Edge[] = useMemo(() => {
     // Occupancy grid of `lane,row` cells that hold a node, so `pickEdgePorts`
@@ -1157,7 +1154,6 @@ export default function CommitGraph({
           markerEnd: { type: MarkerType.ArrowClosed, color: "#30363d" },
         } as Edge;
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [effEdges, lanes, indexByOid]);
 
   // Dashed edges connecting pseudo-nodes to the commits they build on.
@@ -1263,6 +1259,9 @@ export default function CommitGraph({
       if (!isCollapsedRunId(renderId)) onSelectCommit(renderId);
     }
     onJumpConsumed?.();
+    // Fire only when the jump TARGET changes, not on every render where layout
+    // (lanes/indexByOid), fold state, or the callbacks happen to change identity
+    // — those would otherwise re-trigger the same jump/center unnecessarily.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jumpToOid]);
 
