@@ -68,7 +68,7 @@ fn summarize(refs: &[ContainingRef]) -> ContainmentSummary {
                 earliest_tag = match (earliest_tag, r.tip_ts) {
                     (None, _) => Some(r),
                     (Some(cur), Some(ts)) => {
-                        if cur.tip_ts.map_or(true, |c| ts < c) {
+                        if cur.tip_ts.is_none_or(|c| ts < c) {
                             Some(r)
                         } else {
                             Some(cur)
