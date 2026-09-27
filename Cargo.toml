@@ -49,7 +49,7 @@ tracing = { version = "0.1.40" }
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 
 # Config & secrets
-config = { version = "0.14.0" }
+config = { version = "0.15.26" }
 keyring = { version = "3.3.0" }
 
 # HTTP client (for forge APIs: Bitbucket, GitHub, GitLab)
