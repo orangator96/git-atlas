@@ -299,7 +299,7 @@ jobs:
       # themselves are uploaded by tauri-action above).
       - name: Upload checksums to release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.ref_name }}
           files: SHA256SUMS-${{ matrix.os }}.txt
@@ -310,7 +310,7 @@ jobs:
       # the headless / WSL / browser build — no GTK/WebKit/X11 needed to run it.
       - name: Upload standalone server to release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.ref_name }}
           files: ${{ env.STANDALONE_ARCHIVE }}
